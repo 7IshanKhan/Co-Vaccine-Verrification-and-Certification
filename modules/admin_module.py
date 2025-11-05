@@ -5,9 +5,13 @@ import matplotlib.pyplot as plt
 def admin_menu():
     while True:
         print("\n===== Admin Dashboard =====")
-        print("1. View all records")
+        print("1. View all vaccination records")
         print("2. View vaccination statistics")
-        print("3. Exit")
+        print("3. Delete a vaccination record")
+        print("4. Add a vaccinator")
+        print("5. View all vaccinators")
+        print("6. Delete a vaccinator")
+        print("7. Exit")
         choice = input("Enter choice: ").strip()
 
         if choice == "1":
@@ -15,10 +19,19 @@ def admin_menu():
         elif choice == "2":
             view_statistics()
         elif choice == "3":
+            delete_vaccination()
+        elif choice == "4":
+            add_vaccinator()
+        elif choice == "5":
+            view_vaccinators()
+        elif choice == "6":
+            delete_vaccinator()
+        elif choice == "7":
             break
         else:
             print("Invalid choice.")
 
+# ----------------- Vaccination Records -----------------
 def view_all_records():
     df = database.get_all_records()
     if df.empty:
@@ -55,3 +68,34 @@ def view_statistics():
     plt.pie(counts, labels=vaccines, autopct='%1.1f%%', startangle=140)
     plt.title("Vaccination Percentage")
     plt.show()
+
+def delete_vaccination():
+    user_id = input("Enter the ID of the record to delete: ").strip()
+    success = database.delete_vaccination_record(user_id)
+    if success:
+        print(f"Record with ID {user_id} deleted successfully.")
+    else:
+        print(f"No record found with ID {user_id}.")
+
+# ----------------- Vaccinator Management -----------------
+def add_vaccinator():
+    username = input("Enter new vaccinator username: ").strip()
+    password = input("Enter password: ").strip()
+    success = database.add_vaccinator(username, password)
+    if success:
+        print(f"Vaccinator '{username}' added successfully!")
+    else:
+        print(f"Username '{username}' already exists.")
+
+def view_vaccinators():
+    df = database.get_all_vaccinators()
+    if df.empty:
+        print("No vaccinators registered yet.")
+    else:
+        print("\n--- Registered Vaccinators ---")
+        print(df)
+
+def delete_vaccinator():
+    username = input("Enter the username of the vaccinator to delete: ").strip()
+    database.delete_vaccinator(username)
+    print(f"Vaccinator '{username}' deleted successfully (if existed).")

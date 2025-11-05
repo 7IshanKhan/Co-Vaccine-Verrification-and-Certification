@@ -1,8 +1,0 @@
-=== VACCINATION CERTIFICATE ===
-ID: 101
-Name: Ishan Khan
-Vaccine: Covishield
-Dose: 1
-Date: 2025-11-05
-
-Certified by Ministry of Health
