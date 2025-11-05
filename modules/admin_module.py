@@ -2,7 +2,24 @@ import modules.database_module as database
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Admin credentials
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "ADMIN"
+
+
 def admin_menu():
+    # ----------------- Admin Login -----------------
+    print("\n===== Admin Login =====")
+    username = input("Username: ").strip()
+    password = input("Password: ").strip()
+
+    if username != ADMIN_USERNAME or password != ADMIN_PASSWORD:
+        print("❌ Invalid admin credentials! Access denied.")
+        return  # Exit the menu if login fails
+
+    print(f"\n✅ Welcome, {username}!")
+
+    # ----------------- Admin Dashboard -----------------
     while True:
         print("\n===== Admin Dashboard =====")
         print("1. View all vaccination records")
@@ -31,6 +48,7 @@ def admin_menu():
         else:
             print("Invalid choice.")
 
+
 # ----------------- Vaccination Records -----------------
 def view_all_records():
     df = database.get_all_records()
@@ -39,6 +57,7 @@ def view_all_records():
     else:
         print("\n--- Vaccination Records ---")
         print(df)
+
 
 def view_statistics():
     df = database.get_all_records()
@@ -69,6 +88,7 @@ def view_statistics():
     plt.title("Vaccination Percentage")
     plt.show()
 
+
 def delete_vaccination():
     user_id = input("Enter the ID of the record to delete: ").strip()
     success = database.delete_vaccination_record(user_id)
@@ -76,6 +96,7 @@ def delete_vaccination():
         print(f"Record with ID {user_id} deleted successfully.")
     else:
         print(f"No record found with ID {user_id}.")
+
 
 # ----------------- Vaccinator Management -----------------
 def add_vaccinator():
@@ -87,6 +108,7 @@ def add_vaccinator():
     else:
         print(f"Username '{username}' already exists.")
 
+
 def view_vaccinators():
     df = database.get_all_vaccinators()
     if df.empty:
@@ -94,6 +116,7 @@ def view_vaccinators():
     else:
         print("\n--- Registered Vaccinators ---")
         print(df)
+
 
 def delete_vaccinator():
     username = input("Enter the username of the vaccinator to delete: ").strip()
