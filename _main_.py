@@ -1,31 +1,27 @@
-from modules import client_module, doctor_module, admin_module
-import sys
+from modules import database_module, client_module, vaccinator_module, admin_module
 
-def main_menu():
+def main():
+    database_module.initialize_database()  # make sure database exists
+
     while True:
-        print("""
-VACCINE VERIFICATION SYSTEM
-1) Client
-2) Doctor
-3) Admin
-4) Exit
-""")
-        choice = input("Choice: ").strip()
+        print("\n===== E-Vaccine Verification System =====")
+        print("1. Client")
+        print("2. Vaccinator")
+        print("3. Admin")
+        print("4. Exit")
+        choice = input("Enter your choice: ")
+
         if choice == "1":
             client_module.client_menu()
         elif choice == "2":
-            doctor_module.doctor_menu()
+            vaccinator_module.vaccinator_menu()
         elif choice == "3":
-            ok = input("Admin pass: ").strip()
-            if ok == "admin123":
-                admin_module.admin_menu()
-            else:
-                print("Access denied")
+            admin_module.admin_menu()
         elif choice == "4":
-            print("Bye")
-            sys.exit(0)
+            print("Exiting system. Goodbye!")
+            break
         else:
-            print("Invalid")
+            print("Invalid choice, try again.")
 
 if __name__ == "__main__":
-    main_menu()
+    main()
