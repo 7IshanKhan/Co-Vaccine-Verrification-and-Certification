@@ -53,6 +53,7 @@ Dependencies:
 * pandas
 * numpy
 * matplotlib
+* pillow
 
 Notes:
 
